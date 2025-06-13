@@ -1,0 +1,133 @@
+const CHESSBOARD = document.getElementById('chessboard');
+let chessboard_grid = Array.from(CHESSBOARD.children);
+
+function ChessColor(chessboard){
+    let row = 0;
+    let column = 0;
+    chessboard.forEach(element => {
+        if(row % 2 == 0 && column % 2 == 0 || row % 2 != 0 && column % 2 != 0){
+            element.classList.add('black');
+        }
+        else{
+            element.classList.add('white');
+        }
+        row++;
+        if(row % 8 == 0){
+            column++;
+        }
+        
+    });
+}
+
+ChessColor(chessboard_grid);
+
+function initPawn(){
+
+    placementWhite = [9, 10, 11, 12, 13, 14, 15, 16];
+    placementWhite.forEach(id => {
+        let pawnWhiteImage = document.createElement('img');
+        pawnWhiteImage.src = "pieces/Blanc/_Pion-blanc.svg";
+        let box = document.getElementById(id);
+        box.appendChild(pawnWhiteImage);
+    })
+    placementBlack = [49, 50, 51, 52, 53, 54, 55, 56];
+    placementBlack.forEach(id => {
+        let pawnBlackImage = document.createElement('img');
+        pawnBlackImage.src = "pieces/Noir/_Pion-noir.svg";
+        let box = document.getElementById(id);
+        box.appendChild(pawnBlackImage);
+    })
+}
+
+function initKnight() {
+    placementWhite = [2, 7];
+    placementWhite.forEach((id) => {
+        let knightWhiteImage = document.createElement('img');
+        knightWhiteImage.src = "pieces/Blanc/_Cavalier-blanc.svg";
+
+        let box = document.getElementById(id);
+        box.appendChild(knightWhiteImage);
+    });
+
+    placementBlack = [58, 63];
+    placementBlack.forEach((id) => {
+        let knightBlackImage = document.createElement('img');
+        knightBlackImage.src = "pieces/Noir/_Cavalier-noir.svg";
+        let box = document.getElementById(id);
+        box.appendChild(knightBlackImage);
+    });
+}
+
+
+function initBishop(){
+
+    placementWhite = [3, 6];
+    placementWhite.forEach((id) => {
+    let bishopWhiteImage = document.createElement('img');
+    bishopWhiteImage.src = "pieces/Blanc/_Fou-blanc.svg";
+    let box = document.getElementById(id);
+    box.appendChild(bishopWhiteImage);
+    })
+
+    placementBlack = [59, 62];
+    placementBlack.forEach((id) => {
+    let bishopBlackImage = document.createElement('img');
+    bishopBlackImage.src = "pieces/Noir/_Fou-noir.svg";
+    let box = document.getElementById(id);
+    box.appendChild(bishopBlackImage);
+    })
+}
+
+function initRook(){
+
+    placementWhite = [1, 8];
+    placementWhite.forEach((id) => {
+    let rookWhiteImage = document.createElement('img');
+    rookWhiteImage.src = "pieces/Blanc/_Tour-blanc.svg";
+    let box = document.getElementById(id);
+    box.appendChild(rookWhiteImage);
+    })
+
+    placementBlack = [57, 64];
+    placementBlack.forEach((id) => {
+    let rookBlackImage = document.createElement('img');
+    rookBlackImage.src = "pieces/Noir/_Tour-noir.svg";
+    let box = document.getElementById(id);
+    box.appendChild(rookBlackImage);
+    })
+}
+
+function initQueen(){
+    placement = [4, 60];
+    let queenWhiteImage = document.createElement('img');
+    let queenBlackImage = document.createElement('img');
+    queenWhiteImage.src = "pieces/Blanc/_Dame-blanc.svg";
+    queenBlackImage.src = "pieces/Noir/_Dame-noir.svg";
+    let queenWhiteBox = document.getElementById(placement[0]);
+    let queenBlackBox = document.getElementById(placement[1]);
+    queenWhiteBox.appendChild(queenWhiteImage);
+    queenBlackBox.appendChild(queenBlackImage);
+}
+
+function initKing(chessboard){
+    placement = [5, 61];
+    let kingWhiteImage = document.createElement('img');
+    let kingBlackImage = document.createElement('img');
+    kingWhiteImage.src = "pieces/Blanc/_Roi-blanc.svg";
+    kingBlackImage.src = "pieces/Noir/_Roi-noir.svg";
+    let kingWhiteBox = document.getElementById(placement[0]);
+    let kingBlackBox = document.getElementById(placement[1]);
+    kingWhiteBox.appendChild(kingWhiteImage);
+    kingBlackBox.appendChild(kingBlackImage);
+}
+
+function initChessGame(){
+    initPawn();
+    initKnight();
+    initBishop();
+    initRook();
+    initQueen();
+    initKing();
+}
+
+initChessGame();
