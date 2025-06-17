@@ -1,25 +1,36 @@
-const CHESSBOARD = document.getElementById('chessboard');
-let chessboard_grid = Array.from(CHESSBOARD.children);
+const CHESSBOARD = document.getElementById('chessboard'); // Récupération de l'échéquier html
+let chessboard_grid = Array.from(CHESSBOARD.children); // Transformation des cases répertoriées dans un tableau
 
-function ChessColor(chessboard){
-    let row = 0;
-    let column = 0;
+
+let chessboardColor = [[0,1,0,1,0,1,0,1],        // Matrice de l'échéquier, couleur, états, et position des cases.
+                [1,0,1,0,1,0,1,0],
+                [0,1,0,1,0,1,0,1],
+                [1,0,1,0,1,0,1,0],
+                [0,1,0,1,0,1,0,1],
+                [1,0,1,0,1,0,1,0],
+                [0,1,0,1,0,1,0,1],
+                [1,0,1,0,1,0,1,0]
+                ]
+
+function ChessColor(chessboard){        // Fonction pour l'affichage des couleurs des cases
+    let idSpan = 0;
     chessboard.forEach(element => {
-        if(row % 2 == 0 && column % 2 == 0 || row % 2 != 0 && column % 2 != 0){
-            element.classList.add('black');
+        element.forEach(square => {
+        squareElement = chessboard_grid[idSpan];
+        if(square == 1){
+            squareElement.classList.add('black');
         }
         else{
-            element.classList.add('white');
+            squareElement.classList.add('white');
         }
-        row++;
-        if(row % 8 == 0){
-            column++;
-        }
-        
+        idSpan++;
+        });
     });
 }
 
-ChessColor(chessboard_grid);
+ChessColor(chessboardColor);
+
+// Initiation des pièces 
 
 function initPawn(){
 

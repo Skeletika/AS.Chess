@@ -3,6 +3,12 @@
     padding : 0;
 }
 
+:root{
+    --SquareBlack : #61a5c2  ;
+    --SquareWhite : #a9d6e5  ;
+}
+
+
 body{
     height: 100vh;
     display: flex;
@@ -37,9 +43,9 @@ body{
 }
 
 .white{
-    background-color: #a9d6e5;
+    background-color: var(--SquareWhite);
 }
 
 .black{
-    background-color: #61a5c2;
+    background-color: var(--SquareBlack);
 }
