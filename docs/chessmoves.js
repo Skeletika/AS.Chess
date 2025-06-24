@@ -27,54 +27,80 @@ class Piece {
 
 // pour move : type de piece / case occuper par adversaire ou allié / reset de la case actuelle / 
 
-class Pawn extends Piece {
-    constructor(name, coord, color, doubleStep){
-        super(name, coord, color);
-        this.doubleStep = doubleStep;
-    }
 
-    possibleMove(chessboard){
-        const {coord, color, doubleStep} = this;
-        let direction = (color === "white") ? 1 : -1 ;
-        let possibleCaseTabTemp = [[this.x + direction, this.y],[this.x + direction, this.y + 1],[this.x + direction, this.y - 1]];
-        if(doubleStep){possibleCaseTabTemp.push([this.x + (2 * direction), this.y])}; // ajoute la case double si le pion est sur sa case de départ
-        let possibleCaseTab = possibleCaseTabTemp;
-        let possible = true;
+    class Pawn extends Piece {
+        constructor(name, coord, color, doubleStep){
+            super(name, coord, color);
+            this.doubleStep = doubleStep;
+        }
 
-        possibleCaseTabTemp.forEach((element, index) => {
-            if((element[0] >= 0 && element[0] <= 7) && (element[1] >= 0 && element[1] <= 7)){ // case en dehors de l'echequier
-                if(color == "white"){
-                    for(let i = this.x ; i > element[0] ; i++){
-                        console.log(i);
-                        let possibleCase = chessboard[i][element[1]];
-                        if(possibleCase.color == this.color){     // piece du même camps
-                            possible = false;
-                            break;
+        possibleMove(chessboard){
+            const {coord, color, doubleStep} = this;
+            let direction = (color === "white") ? 1 : -1 ;
+            let possibleCaseTabTemp = [[this.x + direction, this.y],[this.x + direction, this.y + 1],[this.x + direction, this.y - 1]];
+            if(doubleStep){possibleCaseTabTemp.push([this.x + (2 * direction), this.y])}; // ajoute la case double si le pion est sur sa case de départ
+            let possibleCaseTab = possibleCaseTabTemp;
+            let possible = true;
+
+            possibleCaseTabTemp.forEach((element, index) => {
+                if((element[0] >= 0 && element[0] <= 7) && (element[1] >= 0 && element[1] <= 7)){ // case en dehors de l'echequier
+                    if(color == "white"){
+                        for(let i = this.x ; i > element[0] ; i++){
+                            console.log(i);
+                            let possibleCase = chessboard[i][element[1]];
+                            if(possibleCase.color == this.color){     // piece du même camps
+                                possible = false;
+                                break;
+                            }
+                            else{possible = true}
                         }
-                        else{possible = true}
                     }
+                    else{
+                        for(let i = this.x; i < element[0] ; i--){
+                            let possibleCase = chessboard[i][element[1]];
+                            if(possibleCase.color == this.color){     // piece du même camps
+                                possible = false;
+                                break;
+                            }
+                            else{possible = true}
+                        }
+                    }
+                    if (!possible){possibleCaseTab.splice(index, 1);}    // supprime l'element du tab à l'index, supprime 1 element uniquement.
                 }
                 else{
-                    for(let i = this.x; i < element[0] ; i--){
-                        let possibleCase = chessboard[i][element[1]];
-                        if(possibleCase.color == this.color){     // piece du même camps
-                            possible = false;
-                            break;
-                        }
-                        else{possible = true}
-                    }
+                    possibleCaseTab.splice(index, 1);
                 }
-                if (!possible){possibleCaseTab.splice(index, 1);}    // supprime l'element du tab à l'index, supprime 1 element uniquement.
-            }
-            else{
-                possibleCaseTab.splice(index, 1);
-            }
-        })
-        possibleCaseTab.forEach(element => {
-            let id = convertCoordsToId(element);
-            let cssPointCases = document.getElementById(id);
-            cssPointCases.classList.add("possible-case");
-        });
+            })
+            possibleCaseTab.forEach(element => {
+                let id = convertCoordsToId(element);
+                let cssPointCases = document.getElementById(id);
+                cssPointCases.classList.add("possible-case");
+            });
+        }
+    }
+
+function clearPossibleMoves() {
+    const previousMoves = document.querySelectorAll('.possible-case');
+    previousMoves.forEach(el => el.classList.remove('possible-case'));
+}
+
+function possibleMove(id) {
+    // Convertir l'id en coordonnées (par ex: id 1 → [0, 0])
+
+    //supprime les anciens moves possibles
+    clearPossibleMoves();
+
+
+    const x = Math.floor((id - 1) / 8);
+    const y = (id - 1) % 8;
+
+    const piece = chessboardPiece[x][y];
+
+    // Vérifier qu'il y a une pièce
+    if (piece) {
+        piece.possibleMove(chessboardPiece);
+    } else {
+        console.log("Aucune pièce sur cette case");
     }
 }
 
@@ -293,6 +319,6 @@ kingBlackPosition.forEach(coord => {
 
 console.log(chessboardPiece);
 
-let pion = chessboardPiece[1][0];
+// let pion = chessboardPiece[1][0];
 
-pion.possibleMove(chessboardPiece);
+// pion.possibleMove(chessboardPiece);
