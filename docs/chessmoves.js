@@ -20,85 +20,139 @@ class Piece {
         this.color = color;
     }
 
-     moveTo(newX, newY, board) {
-        let legalMoves = this.possibleMoves(board);
-        let isLegal = false;
-
-        for (let i = 0; i < legalMoves.length; i++) {
-            let move = legalMoves[i];
-            if (move[0] === newX && move[1] === newY) {
-                isLegal = true;
-                break;
-            }
-        }
-
-        if (!isLegal) {
-            console.log("Coup illégal pour", this.name);
-            return false;
-        }
-
-        // Déplacement
-        board[this.x][this.y] = 0; // libère ancienne case
-        board[newX][newY] = this;  // nouvelle case occupée
-        this.x = newX;
-        this.y = newY;
-
-        console.log(this.name + " se déplace en [" + newX + "," + newY + "]");
-        return true;
+    moveTo(moveX, moveY, chessboard) {
+        
     }
 }
 
+// pour move : type de piece / case occuper par adversaire ou allié / reset de la case actuelle / 
 
 class Pawn extends Piece {
+    constructor(name, coord, color, doubleStep){
+        super(name, coord, color);
+        this.doubleStep = doubleStep;
+    }
+
+    possibleMove(chessboard){
+        const {coord, color, doubleStep} = this;
+        let direction = (color === "white") ? 1 : -1 ;
+        let possibleCaseTabTemp = [[this.x + direction, this.y],[this.x + direction, this.y + 1],[this.x + direction, this.y - 1]];
+        if(doubleStep){possibleCaseTabTemp.push([this.x + (2 * direction), this.y])}; // ajoute la case double si le pion est sur sa case de départ
+        let possibleCaseTab = possibleCaseTabTemp;
+        let possible = true;
+
+        possibleCaseTabTemp.forEach((element, index) => {
+            if((element[0] >= 0 && element[0] <= 7) && (element[1] >= 0 && element[1] <= 7)){ // case en dehors de l'echequier
+                if(color == "white"){
+                    for(let i = this.x ; i > element[0] ; i++){
+                        console.log(i);
+                        let possibleCase = chessboard[i][element[1]];
+                        if(possibleCase.color == this.color){     // piece du même camps
+                            possible = false;
+                            break;
+                        }
+                        else{possible = true}
+                    }
+                }
+                else{
+                    for(let i = this.x; i < element[0] ; i--){
+                        let possibleCase = chessboard[i][element[1]];
+                        if(possibleCase.color == this.color){     // piece du même camps
+                            possible = false;
+                            break;
+                        }
+                        else{possible = true}
+                    }
+                }
+                if (!possible){possibleCaseTab.splice(index, 1);}    // supprime l'element du tab à l'index, supprime 1 element uniquement.
+            }
+            else{
+                possibleCaseTab.splice(index, 1);
+            }
+        })
+        possibleCaseTab.forEach(element => {
+            let id = convertCoordsToId(element);
+            let cssPointCases = document.getElementById(id);
+            cssPointCases.classList.add("possible-case");
+        });
+    }
+}
+
+//    // Diagonale droite
+// if (this.y + 1 <= 7) {
+//     if (x1 >= 0 && x1 <= 7) { // Vérifie que x1 est aussi dans les limites
+//         let target = chessboard[x1][this.y + 1];
+//         if (target && target.color !== this.color) {
+//             possibleMoves.push([x1, this.y + 1]);
+//         }
+//     }
+// }
+
+// // Diagonale gauche
+// if (this.y - 1 >= 0) {
+//     if (x1 >= 0 && x1 <= 7) {
+//         let target = chessboard[x1][this.y - 1];
+//         if (target && target.color !== this.color) {
+//             possibleMoves.push([x1, this.y - 1]);
+//         }
+//     }
+// }
+
+class Knight extends Piece {
     constructor(name, coord, color){
         super(name, coord, color);
     }
+}
 
-     possibleMoves(board) {
-        let moves = [];
-        let direction;
-
-        if (this.color === "white") {
-            direction = 1;
-        } else if (this.color === "black") {
-            direction = -1;
-        } else {
-        console.log("Couleur non reconnue !");
-        return moves;
-    }
-
-        let nextX = this.x + direction;
-
-        console.log("Direction :", direction, "NextX :", nextX);
-
-        // Avancer d'une case
-        if (nextX >= 0 && nextX < 8 && board[nextX][this.y] === 0) {
-            console.log("Case devant :", board[nextX][this.y]);
-            moves.push([nextX, this.y]);
-
-            // Avancer de deux cases si en position initiale
-            if (this.color === "white" && this.x === 1 && board[this.x + 2][this.y] === 0) {
-                moves.push([this.x + 2, this.y]);
-            } else if (this.color === "black" && this.x === 6 && board[this.x - 2][this.y] === 0) {
-                moves.push([this.x - 2, this.y]);
-            }
-        }
-
-        // Captures diagonales
-        for (let dy of [-1, 1]) {
-            let newY = this.y + dy;
-            if (newY >= 0 && newY < 8 && nextX >= 0 && nextX < 8) {
-                let target = board[nextX][newY];
-                if (target !== 0 && target.color !== this.color) {
-                    moves.push([nextX, newY]);
-                }
-            }
-        }
-
-        return moves;
+class Bishop extends Piece {
+    constructor(name, coord, color){
+        super(name, coord, color);
     }
 }
 
+class Rook extends Piece {
+    constructor(name, coord, color){
+        super(name, coord, color);
+    }
+}
+
+class Queen extends Piece {
+    constructor(name, coord, color){
+        super(name, coord, color);
+    }
+}
+
+class King extends Piece {
+    constructor(name, coord, color){
+        super(name, coord, color);
+    }
+}
+
+
+// Array(2) 0 : (2) [2, 0] 1 : (2) [3, 0]
+
+
+// function possibleMoveCase() {
+//     let possibleCaseTab = myPawn.possibleMoves(chessboardPiece);
+//     possibleCaseTab.forEach(element => {
+//         let idCase = convertCoordsToId(element);
+//         possibleCase = document.getElementById(idCase);
+//         possibleCase.classList.add("possible-case");
+//         console.log(idCase);
+//     });
+// }
+
+// ajouterElementAvant()
+
+
+
+//Placement des pions dans la matrice
+
+
+function convertCoordsToId(coords){
+    let idCase = (coords[0]*8) + (coords[1]) + 1;
+    return idCase;
+}
 
 let pawnWhitePosition = [
   [[1, 0], "PA2"],
@@ -122,22 +176,123 @@ let pawnBlackPosition = [
   [[6, 7], "PH7"]
 ];
 
+//Placement des cavaliers dans la matrice
 
+let knightWhitePosition = [
+  [[0, 1], "NB1"],
+  [[0, 6], "NG1"]
+];
+
+let knightBlackPosition = [
+  [[7, 1], "NB7"],
+  [[7, 6], "NG7"]
+];
+
+//Placement des fou dans la matrice
+
+let bishopWhitePosition = [
+
+  [[0, 2], "BC2"],
+  [[0, 5], "BF2"]
+];
+
+let bishopBlackPosition = [
+  [[7, 2], "BC7"],
+  [[7, 5], "BF7"]
+];
+
+//Placement des tours dans la matrice
+
+let rookWhitePosition = [
+  [[0, 0], "RA2"],
+  [[0, 7], "RH2"]
+];
+
+let rookBlackPosition = [
+  [[7, 0], "RA7"],
+  [[7, 7], "RH7"]
+];
+
+//Placement des dames dans la matrice
+
+let queenWhitePosition = [
+  [[0, 3], "QD2"]
+];
+
+let queenBlackPosition = [
+  [[7, 3], "QD7"],
+];
+
+//Placement des roi dans la matrice
+
+let kingWhitePosition = [
+  [[0, 4], "KE2"]
+];
+
+let kingBlackPosition = [
+  [[7, 4], "KE7"]
+];
 
 pawnWhitePosition.forEach(coord => {
-    let x = coord[0][0];
-    let y = coord[0][1];
-    chessboardPiece[x][y] = new Pawn(coord[1], coord[0], "white");
+    chessboardPiece[coord[0][0]][coord[0][1]] = new Pawn(coord[1], coord[0], "white", true);
 });
 
 pawnBlackPosition.forEach(coord => {
-    let x = coord[0][0];
-    let y = coord[0][1];
-    chessboardPiece[x][y] = new Pawn(coord[1], coord[0], "black");
+    chessboardPiece[coord[0][0]][coord[0][1]] = new Pawn(coord[1], coord[0], "black", true);
+});
+
+
+
+knightWhitePosition.forEach(coord => {
+    chessboardPiece[coord[0][0]][coord[0][1]] = new Knight(coord[1], coord[0], "white");
+});
+
+knightBlackPosition.forEach(coord => {
+    chessboardPiece[coord[0][0]][coord[0][1]] = new Knight(coord[1], coord[0], "black");
+});
+
+
+
+
+bishopWhitePosition.forEach(coord => {
+    chessboardPiece[coord[0][0]][coord[0][1]] = new Bishop(coord[1], coord[0], "white");
+});
+
+bishopBlackPosition.forEach(coord => {
+    chessboardPiece[coord[0][0]][coord[0][1]] = new Bishop(coord[1], coord[0], "black");
+});
+
+
+
+rookWhitePosition.forEach(coord => {
+    chessboardPiece[coord[0][0]][coord[0][1]] = new Rook(coord[1], coord[0], "white");
+});
+
+rookBlackPosition.forEach(coord => {
+    chessboardPiece[coord[0][0]][coord[0][1]] = new Rook(coord[1], coord[0], "black");
+});
+
+
+queenWhitePosition.forEach(coord => {
+    chessboardPiece[coord[0][0]][coord[0][1]] = new Queen(coord[1], coord[0], "white");
+});
+
+queenBlackPosition.forEach(coord => {
+    chessboardPiece[coord[0][0]][coord[0][1]] = new Queen(coord[1], coord[0], "black");
+});
+
+
+
+kingWhitePosition.forEach(coord => {
+    chessboardPiece[coord[0][0]][coord[0][1]] = new King(coord[1], coord[0], "white");
+});
+
+kingBlackPosition.forEach(coord => {
+    chessboardPiece[coord[0][0]][coord[0][1]] = new King(coord[1], coord[0], "black");
 });
 
 console.log(chessboardPiece);
 
-let myPawn = chessboardPiece[1][0]; // PA2
-console.log("Coups possibles pour", myPawn.name, ":", myPawn.possibleMoves(chessboardPiece));
-myPawn.moveTo(2, 0, chessboardPiece);
+let pion = chessboardPiece[1][0];
+
+pion.possibleMove(chessboardPiece);

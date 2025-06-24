@@ -25,6 +25,7 @@ body{
 }
 
 .chessboard span{
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,4 +49,16 @@ body{
 
 .black{
     background-color: var(--SquareBlack);
+}
+
+.possible-case::after {
+    position: absolute;
+    left : 3.5vh;
+    top : 3.5vh;
+    content: "";
+    width: 3vh;
+    height: 3vh;
+    background-color: rgba(55, 55, 55, 0.535);
+    border-radius: 50%;
+    z-index: 100;
 }
