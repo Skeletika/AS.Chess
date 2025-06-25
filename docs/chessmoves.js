@@ -76,6 +76,47 @@ class Piece {
                 let cssPointCases = document.getElementById(id);
                 cssPointCases.classList.add("possible-case");
             });
+
+            if ((element[0] >= 0 && element[0] <= 7) && (element[1] >= 0 && element[1] <= 7)){
+                if (color == "White") {
+                    if (element[0] + direction >= 0 && element[1] - 1 >= 0){
+                        let caseLeft = chessboard[element[0] + direction ][element[1] - 1];
+                        if (caseLeft && caseLeft.color !== this.color) {
+                            let id = convertCoordsToId([element[0] + direction, element[1] - 1]);
+                            let cssPointCases = document.getElementById(id);
+                            cssPointCases.classList.add("possible-case");
+                        }
+                    }
+
+                    if (element[0] + direction >= 0 && element[1] + 1 <= 7){
+                        let caseRight = chessboard[element[0] + direction][element[1] + 1];
+                        if (caseRight && caseRight.color !== this.color) {
+                            let id = convertCoordsToId([element[0] + direction, element[1] + 1]);
+                            let cssPointCases = document.getElementById(id);
+                            cssPointCases.classList.add("possible-case");
+                        }
+                    }
+                }
+                else {
+                    if (element[0] - direction >= 0 && element[1] - 1 >= 0){
+                        let caseLeft = chessboard[element[0] - direction][element[1] - 1];
+                        if (caseLeft && caseLeft.color !== this.color) {
+                            let id = convertCoordsToId([element[0] - direction, element[1] - 1]);
+                            let cssPointCases = document.getElementById(id);
+                            cssPointCases.classList.add("possible-case");
+                        }
+                    }
+
+                    if (element[0] - direction >= 0 && element[1] + 1 <= 7){
+                        let caseRight = chessboard[element[0] - direction][element[1] + 1];
+                        if (caseRight && caseRight.color !== this.color) {
+                            let id = convertCoordsToId([element[0] - direction, element[1] + 1]);
+                            let cssPointCases = document.getElementById(id);
+                            cssPointCases.classList.add("possible-case");
+                        }
+                    }
+                }
+            }
         }
     }
 
