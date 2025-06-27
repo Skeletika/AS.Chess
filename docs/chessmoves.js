@@ -20,9 +20,6 @@ class Piece {
         this.color = color;
     }
 
-    moveTo(moveX, moveY, chessboard) {
-        
-    }
 }
 
 // pour move : type de piece / case occuper par adversaire ou allié / reset de la case actuelle / 
@@ -37,48 +34,36 @@ class Piece {
         possibleMove(chessboard){
             const {coord, color, doubleStep} = this;
             let direction = (color === "white") ? 1 : -1 ;
+
             let possibleCaseTabTemp = [[this.x + direction, this.y],[this.x + direction, this.y + 1],[this.x + direction, this.y - 1]];
             if(doubleStep){possibleCaseTabTemp.push([this.x + (2 * direction), this.y])}; // ajoute la case double si le pion est sur sa case de départ
+
             let possibleCaseTab = possibleCaseTabTemp;
             let possible = true;
+            console.log(possibleCaseTabTemp);
 
             possibleCaseTabTemp.forEach((element, index) => {
                 if((element[0] >= 0 && element[0] <= 7) && (element[1] >= 0 && element[1] <= 7)){ // case en dehors de l'echequier
-                    if(color == "white"){
-                        for(let i = this.x ; i > element[0] ; i++){
-                            console.log(i);
-                            let possibleCase = chessboard[i][element[1]];
-                            if(possibleCase.color == this.color){     // piece du même camps
-                                possible = false;
-                                break;
-                            }
-                            else{possible = true}
-                        }
+                    console.log(element[0] , this.x + direction,  direction);
+                    for(let x = element[0] ; x == this.x + (2*direction); x += direction){
+                        let possibleCase = chessboard[x][element[1]];
+                        let id = convertCoordsToId([element[0],element[1]]);
+                        console.log(id);
                     }
-                    else{
-                        for(let i = this.x; i < element[0] ; i--){
-                            let possibleCase = chessboard[i][element[1]];
-                            if(possibleCase.color == this.color){     // piece du même camps
-                                possible = false;
-                                break;
-                            }
-                            else{possible = true}
-                        }
-                    }
-                    if (!possible){possibleCaseTab.splice(index, 1);}    // supprime l'element du tab à l'index, supprime 1 element uniquement.
+                    
+                    // if (!possible){possibleCaseTab.splice(index, 1);}    // supprime l'element du tab à l'index, supprime 1 element uniquement.
                 }
                 else{
                     possibleCaseTab.splice(index, 1);
                 }
             })
-            possibleCaseTab.forEach(element => {
-                let id = convertCoordsToId(element);
-                let cssPointCases = document.getElementById(id);
-                cssPointCases.classList.add("possible-case");
-            });
-
-        }
+        possibleCaseTab.forEach(element => {        // ajout du css au case possible de mouvement
+            let id = convertCoordsToId(element);
+            let cssPointCases = document.getElementById(id);
+            cssPointCases.classList.add("possible-case");
+        });
     }
+}
 
 function clearPossibleMoves() {
     const previousMoves = document.querySelectorAll('.possible-case');
@@ -86,8 +71,7 @@ function clearPossibleMoves() {
 }
 
 function possibleMove(id) {
-    // Convertir l'id en coordonnées (par ex: id 1 → [0, 0])
-
+    // Convertir l'id en coordonnées (par ex: id 1 → [0, 0]
     //supprime les anciens moves possibles
     clearPossibleMoves();
 
@@ -323,3 +307,35 @@ console.log(chessboardPiece);
 // let pion = chessboardPiece[1][0];
 
 // pion.possibleMove(chessboardPiece);
+
+
+
+
+
+
+
+function chesstimer(color) {
+    let counterValue = (color == 'white') ? document.getElementById('chesstimerwhite') :  document.getElementById('chesstimerblack');
+    counter = counterValue.dataset.value; 
+    timer = setInterval(() => {
+    if (counter <= 0 ) {
+        clearInterval(timer);
+    }
+    let minutes = Math.floor(counter / 60);
+    let secondes = Math.floor(counter % 60);
+    counter--;
+    counterValue.dataset.value = counter;
+    let minutesText = (color == "white") ? document.querySelector('.white-minutes #minutes') : document.querySelector('.black-minutes #minutes');
+    let secondesText = (color == "white") ? document.querySelector('.white-secondes #secondes') : document.querySelector('.black-secondes #secondes');
+    
+    minutesText.textContent = minutes;
+    secondesText.textContent = secondes;
+    console.log(`${minutes}m : ${secondes}s`);
+    }, 1000);
+}
+function Stoptimer() {
+    clearInterval(timer);
+}
+// document.getElementById("start-button").addEventListener("click", chesstimer);
+// document.getElementById("stop-button").addEventListener("click", Stoptimer);
+

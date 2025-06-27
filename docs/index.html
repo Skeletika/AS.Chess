@@ -9,6 +9,25 @@
 </head>
 
 <body>
+
+
+
+<div class="game">
+
+
+    <div class="chesstimer" id="chesstimerwhite" data-value="600">
+        <button id="start-button" onclick="chesstimer('white')">START</button>
+        <div class="white-minutes">
+            <span id="minutes"></span>Minutes
+        </div>
+
+        <div class="white-secondes">
+            <span id="secondes"></span>Secondes
+        </div>
+        <button id="stop-button" onclick="Stoptimer()">STOP</button>
+    </div>
+
+
     <div class="chessboard" id="chessboard">
         <span id="1" onclick="possibleMove(1)"></span>
         <span id="2" onclick="possibleMove(2)"></span>
@@ -75,6 +94,27 @@
         <span id="63" onclick="possibleMove(63)"></span>
         <span id="64" onclick="possibleMove(64)"></span>
     </div>
+
+    <div class="chesstimer" id="chesstimerblack" data-value="600">
+        <button id="start-timer" onclick="chesstimer('black')">START</button>
+        
+        
+        <div class="black-minutes">
+            <span id="minutes"></span>Minutes
+        </div>
+
+        <div class="black-secondes">
+            <span id="secondes"></span>Secondes
+        </div>
+        
+        <button id="stop-timer" onclick="Stoptimer()">STOP</button>
+    </div>
+
+</div>
+
+    
+
+
 
 </body>
 <script src="chessboard.js"></script>
