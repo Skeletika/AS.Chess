@@ -18,18 +18,18 @@
     <div class="chesstimer" id="chesstimerwhite" data-value="600">
         <button id="start-button" onclick="chesstimer('white')">START</button>
         <div class="white-minutes">
-            <span id="minutes"></span>Minutes
+            <span id="minutes">10</span>Minutes
         </div>
 
         <div class="white-secondes">
-            <span id="secondes"></span>Secondes
+            <span id="secondes">00</span>Secondes
         </div>
         <button id="stop-button" onclick="Stoptimer()">STOP</button>
     </div>
 
 
     <div class="chessboard" id="chessboard">
-        <span id="1" onclick="possibleMove(1)"></span>
+        <span id="1" onclick="possibleMove(1)"><div class="column">8</div></span>
         <span id="2" onclick="possibleMove(2)"></span>
         <span id="3" onclick="possibleMove(3)"></span>
         <span id="4" onclick="possibleMove(4)"></span>
@@ -37,7 +37,7 @@
         <span id="6" onclick="possibleMove(6)"></span>
         <span id="7" onclick="possibleMove(7)"></span>
         <span id="8" onclick="possibleMove(8)"></span>
-        <span id="9" onclick="possibleMove(9)"></span>
+        <span id="9" onclick="possibleMove(9)"><div class="column">7</div></span>
         <span id="10" onclick="possibleMove(10)"></span>
         <span id="11" onclick="possibleMove(11)"></span>
         <span id="12" onclick="possibleMove(12)"></span>
@@ -45,7 +45,7 @@
         <span id="14" onclick="possibleMove(14)"></span>
         <span id="15" onclick="possibleMove(15)"></span>
         <span id="16" onclick="possibleMove(16)"></span>
-        <span id="17" onclick="possibleMove(17)"></span>
+        <span id="17" onclick="possibleMove(17)"><div class="column">6</div></span>
         <span id="18" onclick="possibleMove(18)"></span>
         <span id="19" onclick="possibleMove(19)"></span>
         <span id="20" onclick="possibleMove(20)"></span>
@@ -53,7 +53,7 @@
         <span id="22" onclick="possibleMove(22)"></span>
         <span id="23" onclick="possibleMove(23)"></span>
         <span id="24" onclick="possibleMove(24)"></span>
-        <span id="25" onclick="possibleMove(25)"></span>
+        <span id="25" onclick="possibleMove(25)"><div class="column">5</div></span>
         <span id="26" onclick="possibleMove(26)"></span>
         <span id="27" onclick="possibleMove(27)"></span>
         <span id="28" onclick="possibleMove(28)"></span>
@@ -61,7 +61,7 @@
         <span id="30" onclick="possibleMove(30)"></span>
         <span id="31" onclick="possibleMove(31)"></span>
         <span id="32" onclick="possibleMove(32)"></span>
-        <span id="33" onclick="possibleMove(33)"></span>
+        <span id="33" onclick="possibleMove(33)"><div class="column">4</div></span>
         <span id="34" onclick="possibleMove(34)"></span>
         <span id="35" onclick="possibleMove(35)"></span>
         <span id="36" onclick="possibleMove(36)"></span>
@@ -69,7 +69,7 @@
         <span id="38" onclick="possibleMove(38)"></span>
         <span id="39" onclick="possibleMove(39)"></span>
         <span id="40" onclick="possibleMove(40)"></span>
-        <span id="41" onclick="possibleMove(41)"></span>
+        <span id="41" onclick="possibleMove(41)"><div class="column">3</div></span>
         <span id="42" onclick="possibleMove(42)"></span>
         <span id="43" onclick="possibleMove(43)"></span>
         <span id="44" onclick="possibleMove(44)"></span>
@@ -77,7 +77,7 @@
         <span id="46" onclick="possibleMove(46)"></span>
         <span id="47" onclick="possibleMove(47)"></span>
         <span id="48" onclick="possibleMove(48)"></span>
-        <span id="49" onclick="possibleMove(49)"></span>
+        <span id="49" onclick="possibleMove(49)"><div class="column">2</div></span>
         <span id="50" onclick="possibleMove(50)"></span>
         <span id="51" onclick="possibleMove(51)"></span>
         <span id="52" onclick="possibleMove(52)"></span>
@@ -85,14 +85,18 @@
         <span id="54" onclick="possibleMove(54)"></span>
         <span id="55" onclick="possibleMove(55)"></span>
         <span id="56" onclick="possibleMove(56)"></span>
-        <span id="57" onclick="possibleMove(57)"></span>
-        <span id="58" onclick="possibleMove(58)"></span>
-        <span id="59" onclick="possibleMove(59)"></span>
-        <span id="60" onclick="possibleMove(60)"></span>
-        <span id="61" onclick="possibleMove(61)"></span>
-        <span id="62" onclick="possibleMove(62)"></span>
-        <span id="63" onclick="possibleMove(63)"></span>
-        <span id="64" onclick="possibleMove(64)"></span>
+        <span id="57" onclick="possibleMove(57)">
+
+            <div class="column">1</div>
+            <div class="row">A</div>
+        </span>
+        <span id="58" onclick="possibleMove(58)"><div class="row">B</div></span>
+        <span id="59" onclick="possibleMove(59)"><div class="row">C</div></span>
+        <span id="60" onclick="possibleMove(60)"><div class="row">D</div></span>
+        <span id="61" onclick="possibleMove(61)"><div class="row">E</div></span>
+        <span id="62" onclick="possibleMove(62)"><div class="row">F</div></span>
+        <span id="63" onclick="possibleMove(63)"><div class="row">G</div></span>
+        <span id="64" onclick="possibleMove(64)"><div class="row">H</div></span>
     </div>
 
     <div class="chesstimer" id="chesstimerblack" data-value="600">
@@ -100,11 +104,11 @@
         
         
         <div class="black-minutes">
-            <span id="minutes"></span>Minutes
+            <span id="minutes">10</span>Minutes
         </div>
 
         <div class="black-secondes">
-            <span id="secondes"></span>Secondes
+            <span id="secondes">00</span>Secondes
         </div>
         
         <button id="stop-timer" onclick="Stoptimer()">STOP</button>

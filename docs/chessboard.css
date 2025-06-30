@@ -19,7 +19,6 @@ body{
 }
 
 .game{
-    background-color: aqua;
     display: flex;
     flex-direction: column;
     
@@ -81,9 +80,11 @@ body{
     display: flex;
     flex-direction: row;
     text-align: center;
+    align-items: flex-end;
     gap : 15px;
-        background-color: #7273B0;
+    background-color: #7273B0;
     width: fit-content;
+    height: 50px;
 }
 
 #chesstimerblack {
@@ -98,4 +99,24 @@ body{
     flex-direction: column;
     font-size: 20px;
     color: #fff;
+}
+ 
+.column{
+    font-size: 20px;
+    font-weight: 600;
+    position: absolute;
+    top: 2.5px;
+    left: 2.5px;
+    color: #fff;
+    opacity: 0.80;
+}
+
+.row{
+    font-size: 20px;
+    font-weight: 600;
+    position: absolute;
+    bottom: 2.5px;
+    right: 2.5px;
+    color: #fff;
+    opacity: 0.80;
 }

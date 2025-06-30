@@ -57,12 +57,12 @@ class Piece {
                     possibleCaseTab.splice(index, 1);
                 }
             })
-        possibleCaseTab.forEach(element => {        // ajout du css au case possible de mouvement
-            let id = convertCoordsToId(element);
-            let cssPointCases = document.getElementById(id);
-            cssPointCases.classList.add("possible-case");
-        });
-    }
+            possibleCaseTab.forEach(element => {        // ajout du css au case possible de mouvement
+                let id = convertCoordsToId(element);
+                let cssPointCases = document.getElementById(id);
+                cssPointCases.classList.add("possible-case");
+            });
+        }
 }
 
 function clearPossibleMoves() {
@@ -112,6 +112,21 @@ function possibleMove(id) {
 class Knight extends Piece {
     constructor(name, coord, color){
         super(name, coord, color);
+    }
+    possibleMove(chessboard){
+        const {coord, color} = this;
+        clearPossibleMoves();
+
+        let possibleCaseforknight = [
+            [1, 3], [-1, 3], [1, -3], [-1, -3], 
+            [3, 1], [-3, 1], [3, -1], [-3, -1]
+        ]
+        let possibleCaseforknightbis = possibleCaseforknight
+        console.log(possibleCaseforknightbis);
+
+        possibleCaseTabTemp.forEach((element, index) => {
+
+        })
     }
 }
 
