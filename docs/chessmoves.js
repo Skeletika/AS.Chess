@@ -34,35 +34,62 @@ class Piece {
         possibleMove(chessboard){
             const {coord, color, doubleStep} = this;
             let direction = (color === "white") ? 1 : -1 ;
+            let possibleCaseTabTemp = [];
+            if(doubleStep){
+                possibleCaseTabTemp = [[this.x + direction, this.y],[this.x + direction, this.y + 1],[this.x + direction, this.y - 1],[this.x + (2 * direction), this.y]];
+            } // ajoute la case double si le pion est sur sa case de départ
+            else{
+                possibleCaseTabTemp = [[this.x + direction, this.y],[this.x + direction, this.y + 1],[this.x + direction, this.y - 1]];
+            };
+            // possibleCaseTabTemp.forEach((element, index) => {
+            //     console.log(index, element);
+            // })
 
-            let possibleCaseTabTemp = [[this.x + direction, this.y],[this.x + direction, this.y + 1],[this.x + direction, this.y - 1]];
-            if(doubleStep){possibleCaseTabTemp.push([this.x + (2 * direction), this.y])}; // ajoute la case double si le pion est sur sa case de départ
-
-            let possibleCaseTab = possibleCaseTabTemp;
+            let possibleCaseTab = [...possibleCaseTabTemp];
+            console.log(JSON.stringify(possibleCaseTabTemp));
+            console.log(JSON.stringify(possibleCaseTab));
             let possible = true;
-            console.log(possibleCaseTabTemp);
+            let nbCaseSuppr = 0;
 
             possibleCaseTabTemp.forEach((element, index) => {
+                // console.log(index, element);
                 if((element[0] >= 0 && element[0] <= 7) && (element[1] >= 0 && element[1] <= 7)){ // case en dehors de l'echequier
-                    console.log(element[0] , this.x + direction,  direction);
-                    for(let x = element[0] ; x == this.x + (2*direction); x += direction){
-                        let possibleCase = chessboard[x][element[1]];
-                        let id = convertCoordsToId([element[0],element[1]]);
-                        console.log(id);
+                    let possibleCase = chessboard[element[0]][element[1]];
+                    console.log(this.y,[element[0], element[1]]);
+                    console.log("index = ", index);
+                    console.log(possibleCase);
+                    if(element[1] == this.y){
+                        if(possibleCase != 0){
+                            possibleCaseTab.splice(index - nbCaseSuppr, 1);
+                            nbCaseSuppr++;
+                        }
                     }
-                    
+                    else{
+                        console.log(possibleCase.color);
+                        console.log(this.color);
+                        if(possibleCase == 0 && (possibleCase != 0 && possibleCase.color != this.color)){
+                            possibleCaseTab.splice(index - nbCaseSuppr, 1);
+                            nbCaseSuppr++;
+                        }
+                    }
+                    console.log(JSON.stringify(possibleCaseTab));
                     // if (!possible){possibleCaseTab.splice(index, 1);}    // supprime l'element du tab à l'index, supprime 1 element uniquement.
                 }
                 else{
-                    possibleCaseTab.splice(index, 1);
+                    possibleCaseTab.splice(index - nbCaseSuppr, 1);
+                    nbCaseSuppr++;
                 }
-            })
+            });
             possibleCaseTab.forEach(element => {        // ajout du css au case possible de mouvement
                 let id = convertCoordsToId(element);
                 let cssPointCases = document.getElementById(id);
                 cssPointCases.classList.add("possible-case");
             });
         }
+}
+
+function tabMovesFilter(piece, possibleCaseTab){
+    
 }
 
 function clearPossibleMoves() {
@@ -80,6 +107,7 @@ function possibleMove(id) {
     const y = (id - 1) % 8;
 
     const piece = chessboardPiece[x][y];
+    console.log(piece);
 
     // Vérifier qu'il y a une pièce
     if (piece) {
@@ -183,7 +211,7 @@ function convertCoordsToId(coords){
 let pawnWhitePosition = [
   [[1, 0], "PA2"],
   [[1, 1], "PB2"],
-  [[1, 2], "PC2"],
+  [[5, 2], "PC2"],
   [[1, 3], "PD2"],
   [[1, 4], "PE2"],
   [[1, 5], "PF2"],
